@@ -10,7 +10,7 @@ description: >
   Do NOT use for general web browsing, bookmark management, or fetching pages without saving.
 allowed-tools: "Bash(node:*)"
 compatibility: >
-  Requires Node.js 18+. Uses OpenClaw memory_search for retrieval.
+  Requires Node.js 18+. Uses local markdown search for retrieval.
   No API keys needed. No external dependencies. Works on Linux/macOS.
 metadata:
   author: DaDefiDon
@@ -27,13 +27,13 @@ A persistent, searchable knowledge base built from everything the user shares. N
 
 1. `node scripts/source-library.js setup` — creates directories
 2. Share any URL in chat — the agent auto-processes and saves it
-3. Use OpenClaw's `memory_search` to find past sources (they're auto-indexed)
+3. Use `node scripts/source-library.js search "query"` to find past sources
 
 ## Auto-Trigger Behavior
 
 When the user shares **any URL**, without being asked:
 
-1. **Search first** — use `memory_search` to find related existing sources. Surface specific connections.
+1. **Search first** — use local source search to find related existing sources. Surface specific connections.
 2. **Analyze with context** — discuss the new source with existing knowledge layered in.
 3. **Save with substance:**
    ```bash
@@ -48,9 +48,9 @@ All commands via `node scripts/source-library.js <command>`:
 | Command | Description |
 |---------|-------------|
 | `setup` | Create directories, first-run welcome |
-| `save --name "..." --url "..." [--author --type --tags --claims --analysis --context --slug --related --decay]` | Save a source |
+| `save --name "..." --url "..." [--author --type --tags --summary --claims --analysis --context --slug --related --decay --date --force]` | Save a source |
 | `list [--type tweet] [--tag crypto] [--decay]` | List sources with optional filters |
-| `search "query"` | Delegates to OpenClaw memory_search |
+| `search "query" [--limit 10]` | Search local source summaries with relevance scoring |
 | `stats` | Library statistics (total, by type, by tag, disk usage) |
 | `connections [--clusters\|--orphans]` | Map relationships between sources |
 | `conflicts` | Detect contradictions via sentiment heuristics |

@@ -6,7 +6,7 @@ A persistent, searchable knowledge base for OpenClaw agents. Every link you shar
 
 - **Auto-captures URLs** — Share any link in chat and your agent saves it with structured metadata, key claims, and analysis
 - **Cross-references everything** — Maps connections between sources, detects contradictions, clusters by topic
-- **Searches via OpenClaw** — Piggybacks on your existing memory_search setup. Zero API keys needed.
+- **Local relevance search** — Searches your `life/source/*/summary.md` files by title, tags, key claims, and analysis with relevance scores. Zero API keys needed.
 - **Confidence decay** — Tracks freshness so you know which sources are stale
 - **Reading queue** — Save URLs to process later
 
@@ -26,7 +26,7 @@ That's it. Share a URL and your agent handles the rest.
 ## Requirements
 
 - Node.js 18+
-- OpenClaw with memory_search configured (any embedding provider works)
+- OpenClaw workspace
 - No API keys, no external dependencies
 
 ## Commands
@@ -36,7 +36,7 @@ All via `node scripts/source-library.js <command>`:
 - `setup` — First-run directory creation
 - `save` — Save a source with metadata, claims, analysis
 - `list` — Browse your library with filters
-- `search "query"` — Find past sources (via memory_search)
+- `search "query"` — Local relevance search across saved source summaries
 - `stats` — Library stats
 - `connections` — Map how sources relate to each other
 - `conflicts` — Detect contradictions between sources
@@ -46,7 +46,7 @@ All via `node scripts/source-library.js <command>`:
 
 ## How It Works
 
-Sources are stored as markdown files at `life/source/{slug}/summary.md` in your workspace. OpenClaw's memory_search automatically indexes them — no separate database, no vector store to maintain, no API keys to configure.
+Sources are stored as markdown files at `life/source/{slug}/summary.md` in your workspace. The built-in `search` command scans and ranks these local files directly — no separate database, no vector store to maintain, no API keys to configure.
 
 Each source captures: title, URL, author, date, type, tags, key claims, notable quotes, analysis, and context. The agent fills these in automatically when you share a link.
 
